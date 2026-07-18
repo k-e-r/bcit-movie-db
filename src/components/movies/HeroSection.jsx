@@ -17,7 +17,7 @@ export const HeroSection = ({ heroMovie }) => {
   return (
     <section className="relative">
       <img
-        className="object-cover h-[80vh] w-full brightness-40"
+        className="max-h-[800px] object-cover h-[80vh] w-full brightness-40"
         src={import.meta.env.VITE_URL_DOMAIN + heroImg}
         alt={heroMovie.title}
       />

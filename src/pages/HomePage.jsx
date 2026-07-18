@@ -23,7 +23,7 @@ export const HomePage = () => {
 
   return (
     <>
-      <div className="relative">
+      <div className="relative max-h-[800px]">
         {heroMovie ? (
           <HeroSection heroMovie={heroMovie} />
         ) : (
