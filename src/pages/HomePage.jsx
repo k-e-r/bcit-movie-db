@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { getCategoryMovies } from "../services/movieService";
 import { HeroSection } from "../components/movies/HeroSection";
 import { HeroSkeleton } from "../components/movies/HeroSkelton";
+import { MovieListSection } from "../components/movies/MovieListSection";
 
 export const HomePage = () => {
   const [heroMovie, setHeroMovie] = useState(null);
@@ -23,12 +24,14 @@ export const HomePage = () => {
 
   return (
     <>
-      <div className="relative max-h-[800px]">
+      <div className="relative">
         {heroMovie ? (
           <HeroSection heroMovie={heroMovie} />
         ) : (
           <HeroSkeleton />
         )}
+
+        <MovieListSection />
       </div>
     </>
   )

@@ -1,5 +1,9 @@
+import { CategorySelector } from "./CategorySelector"
+
 export const MovieListSection = () => {
   return (
-    <div>MovieListSection</div>
+    <section className="mt-12">
+      <CategorySelector />
+    </section>
   )
 }
