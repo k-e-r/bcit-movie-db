@@ -21,7 +21,7 @@ export const HeroSection = ({ heroMovie }) => {
         />
       )}
       <img
-        src={`${import.meta.env.VITE_URL_DOMAIN}${heroImg}`}
+        src={`https://image.tmdb.org/t/p/original${heroImg}`}
         alt={heroMovie.title}
         loading="lazy"
         onLoad={() => setIsImageLoading(false)}
