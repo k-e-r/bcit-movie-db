@@ -16,7 +16,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="w-full bg-black">
+      <header className="sticky top-0 z-999 w-full bg-black">
         <div className="max-w-[1260px] py-5 px-4 sm:px-8 flex justify-between items-center m-auto">
           <Link to="/" aria-label="Go to Home">
             <LogoIcon className="brightness-0 invert w-[30px] h-auto hover:opacity-60 transition-all duration-300 ease-in-out" />
