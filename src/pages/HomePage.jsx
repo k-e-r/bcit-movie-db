@@ -6,12 +6,12 @@ import { HeroSection } from "../components/movies/HeroSection";
 import { HeroSkeleton } from "../components/movies/HeroSkelton";
 import { MovieListSection } from "../components/movies/MovieListSection";
 
-const DEFAULT_CATEGORY = 'popular';
+const DEFAULT_CATEGORY = "popular";
 const VALID_CATEGORIES = [
-  'popular',
-  'top_rated',
-  'now_playing',
-  'upcoming',
+  "popular",
+  "top_rated",
+  "now_playing",
+  "upcoming",
 ];
 
 export const HomePage = () => {
@@ -20,7 +20,7 @@ export const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const categorySectionRef = useRef(null);
 
-  const queryCategory = searchParams.get('category');
+  const queryCategory = searchParams.get("category");
   const category = VALID_CATEGORIES.includes(queryCategory)
     ? queryCategory
     : DEFAULT_CATEGORY;
@@ -32,20 +32,24 @@ export const HomePage = () => {
       const data = await getCategoryMovies(category);
       setMovieList(data.results ?? []);
     } catch (error) {
-      console.error('Failed to fetch movies:', error);
+      console.error("Failed to fetch movies:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    if (!searchParams.has('category')) {
+    if (!searchParams.has("category")) {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       return;
     }
 
     categorySectionRef.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
+      behavior: "smooth",
+      block: "start",
     });
 
     updateMovieList();
@@ -58,7 +62,7 @@ export const HomePage = () => {
   return (
     <>
       <div className="relative">
-        {movieList[0] ? (
+        {movieList.length > 0 && movieList[0].backdrop_path ? (
           <HeroSection heroMovie={movieList[0]} />
         ) : (
           <HeroSkeleton />

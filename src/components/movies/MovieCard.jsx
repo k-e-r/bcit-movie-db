@@ -30,7 +30,7 @@ export const MovieCard = ({ movieData }) => {
 
           <img
             src={`${import.meta.env.VITE_URL_DOMAIN}${movieData.poster_path}`}
-            alt=""
+            alt={movieData.title}
             loading="lazy"
             onLoad={() => setIsImageLoading(false)}
             onError={() => setIsImageLoading(false)}

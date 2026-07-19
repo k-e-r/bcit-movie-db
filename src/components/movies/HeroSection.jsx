@@ -3,21 +3,30 @@ import { HeroSkeleton } from "./HeroSkelton";
 import { Link } from "react-router";
 
 export const HeroSection = ({ heroMovie }) => {
+  const [isImageLoading, setIsImageLoading] = useState(true);
   const [heroImg, setHeroImg] = useState(null)
 
   useEffect(() => {
     if (heroMovie.backdrop_path) {
       setHeroImg(heroMovie.backdrop_path);
     }
-
   }, [heroMovie])
 
   return (
     <section className="relative max-h-[800px]">
+      {isImageLoading && (
+        <div
+          className="absolute inset-0 animate-pulse bg-gray-300"
+          aria-hidden="true"
+        />
+      )}
       <img
-        className="max-h-[800px] object-cover h-[80vh] w-full brightness-40"
-        src={import.meta.env.VITE_URL_DOMAIN + heroImg}
+        src={`${import.meta.env.VITE_URL_DOMAIN}${heroImg}`}
         alt={heroMovie.title}
+        loading="lazy"
+        onLoad={() => setIsImageLoading(false)}
+        onError={() => setIsImageLoading(false)}
+        className={`${isImageLoading ? "opacity-0" : "opacity-100"} max-h-[800px] object-cover h-[80vh] w-full brightness-40`}
       />
 
       <div className="absolute left-1/2 transform -translate-x-1/2 z-1 bottom-0 max-w-[1260px] w-full h-full block flex items-end justify-end">

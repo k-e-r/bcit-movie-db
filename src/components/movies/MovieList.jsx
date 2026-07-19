@@ -15,7 +15,7 @@ export const MovieList = ({ movieList }) => {
 
   return (
     <div className="gap-x-3 sm:gap-x-5 gap-y-5 sm:gap-y-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {movieList?.length > 0 ? (
+      {isLoading && movieList?.length > 11 ? (
         <>
           {movieList.slice(0, SKELETON_COUNT).map((val, idx) => (
             <MovieCard key={idx} movieData={val} />
