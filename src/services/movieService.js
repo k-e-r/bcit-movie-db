@@ -1,7 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
-
 const fetchMovieApi = async (path) => {
-  const response = await fetch(`${API_BASE_URL}${path}`);
+  const response = await fetch(`${path}`);
 
   if (!response.ok) {
     throw new Error(
