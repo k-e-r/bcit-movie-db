@@ -25,25 +25,31 @@ export const HomePage = () => {
     ? queryCategory
     : DEFAULT_CATEGORY;
 
-  const updateMovieList = async () => {
-    setIsLoading(true);
+  useEffect(() => {
+    const updateMovieList = async () => {
+      setIsLoading(true);
 
-    try {
-      const data = await getCategoryMovies(category);
-      setMovieList(data.results ?? []);
-    } catch (error) {
-      console.error("Failed to fetch movies:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      try {
+        const data = await getCategoryMovies(category);
+        setMovieList(data.results ?? []);
+      } catch (error) {
+        console.error("Failed to fetch movies:", error);
+        setMovieList([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    updateMovieList();
+  }, [category]);
 
   useEffect(() => {
-    if (!searchParams.has("category")) {
+    if (!queryCategory) {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
+
       return;
     }
 
@@ -51,13 +57,7 @@ export const HomePage = () => {
       behavior: "smooth",
       block: "start",
     });
-
-    updateMovieList();
-  }, [category, searchParams]);
-
-  useEffect(() => {
-    updateMovieList();
-  }, []);
+  }, [queryCategory]);
 
   return (
     <>

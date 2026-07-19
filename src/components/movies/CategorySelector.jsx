@@ -28,10 +28,10 @@ export const CategorySelector = () => {
   const [selectCategory, setSelectCategory] = useState(CATEGORY_LINKS[0].label);
 
   useEffect(() => {
-    const category = searchParams.get('category') ?? CATEGORY_LINKS[0].category;
+    const category = searchParams.get("category") ?? CATEGORY_LINKS[0].category;
 
     setSelectCategory(CATEGORY_LINKS.find((item) => item.category === category).label ?? CATEGORY_LINKS[0].label);
-  }, [searchParams.get('category')])
+  }, [searchParams.get("category")])
 
   return (
     <>
