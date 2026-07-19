@@ -7,13 +7,14 @@ import { MovieListSection } from "../components/movies/MovieListSection";
 
 export const HomePage = () => {
   const [heroMovie, setHeroMovie] = useState(null);
+  const [movieList, setMovieList] = useState(null);
 
   useEffect(() => {
     const init = async () => {
       try {
         const data = await getCategoryMovies("now_playing");
         setHeroMovie(data?.results[0]);
-        console.log("data", data);
+        setMovieList(data?.results);
       } catch (error) {
         console.error("Failed to fetch movies:", error);
       }
@@ -31,7 +32,7 @@ export const HomePage = () => {
           <HeroSkeleton />
         )}
 
-        <MovieListSection />
+        <MovieListSection movieList={movieList} />
       </div>
     </>
   )

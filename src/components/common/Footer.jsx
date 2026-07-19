@@ -23,7 +23,7 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="max-w-[1260px] pt-15 px-4 sm:px-8 m-auto">
+    <footer className="max-w-[1260px] px-4 sm:px-8 m-auto">
       <div className="flex justify-between flex-col sm:flex-row flex-col-reverse sm:flex-row">
         <div className="mt-13 sm:mt-0">
           <Link to="/" aria-label="Movie App home">

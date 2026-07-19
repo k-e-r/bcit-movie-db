@@ -4,8 +4,6 @@ import { Link } from "react-router";
 
 export const HeroSection = ({ heroMovie }) => {
   const [heroImg, setHeroImg] = useState(null)
-  console.log("heroMovie", heroMovie);
-  console.log("backdrop_path", heroMovie.backdrop_path);
 
   useEffect(() => {
     if (heroMovie.backdrop_path) {
