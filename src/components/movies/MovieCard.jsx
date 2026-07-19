@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { HeartIcon } from "../icons/HeartIcon";
-import { Link } from 'react-router';
+import { Link } from "react-router";
 
 export const MovieCard = ({ movieData }) => {
   const [isImageLoading, setIsImageLoading] = useState(true);
@@ -35,7 +35,7 @@ export const MovieCard = ({ movieData }) => {
             onLoad={() => setIsImageLoading(false)}
             onError={() => setIsImageLoading(false)}
             className={`h-full w-full object-cover transition duration-300 group-hover:scale-105 ${
-              isImageLoading ? 'opacity-0' : 'opacity-100'
+              isImageLoading ? "opacity-0" : "opacity-100"
             }`}
           />
         </div>
@@ -60,7 +60,7 @@ export const MovieCard = ({ movieData }) => {
             </h2>
 
             <p className="text-xs sm:text-sm">
-              {movieData.release_date?.replaceAll('-', '/')}
+              {movieData.release_date?.replaceAll("-", "/")}
             </p>
           </Link>
         )}
@@ -78,7 +78,7 @@ export const MovieCard = ({ movieData }) => {
         >
           <HeartIcon
             className={`w-full transition-colors hover:fill-black ${
-              addFavourite ? 'fill-black' : ''
+              addFavourite ? "fill-black" : ""
             }`}
           />
         </button>
