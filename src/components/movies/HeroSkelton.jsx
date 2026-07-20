@@ -5,7 +5,7 @@ export const HeroSkeleton = () => {
       className="relative max-h-[800px] h-[80vh] animate-pulse w-full bg-gray-500"
     >
       <div className="absolute left-1/2 transform -translate-x-1/2 z-1 top-0 max-w-[1260px] w-full h-full block flex items-end justify-end">
-        <div className="max-w-[700px] w-full p-7 sm:p-15 flex flex-col gap-6">
+        <div className="max-w-[700px] w-full px-7 sm:px-15 pb-17 sm:pb-25 flex flex-col gap-6">
           <div className="w-full max-w-xl">
             <div className="mt-4 h-12 w-3/4 rounded bg-gray-300" />
 

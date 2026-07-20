@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { useSearchParams } from "react-router";
 
 import { getCategoryMovies } from "../services/movieService";
@@ -17,8 +17,6 @@ const VALID_CATEGORIES = [
 export const HomePage = () => {
   const [searchParams] = useSearchParams();
   const [movieList, setMovieList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const categorySectionRef = useRef(null);
 
   const queryCategory = searchParams.get("category");
   const category = VALID_CATEGORIES.includes(queryCategory)
@@ -27,7 +25,6 @@ export const HomePage = () => {
 
   useEffect(() => {
     const updateMovieList = async () => {
-      setIsLoading(true);
 
       try {
         const data = await getCategoryMovies(category);
@@ -35,41 +32,22 @@ export const HomePage = () => {
       } catch (error) {
         console.error("Failed to fetch movies:", error);
         setMovieList([]);
-      } finally {
-        setIsLoading(false);
       }
     };
 
     updateMovieList();
   }, [category]);
 
-  useEffect(() => {
-    if (!queryCategory) {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-
-      return;
-    }
-
-    categorySectionRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }, [queryCategory]);
-
   return (
     <>
-      <div className="relative">
-        {movieList.length > 0 && movieList[0].backdrop_path ? (
-          <HeroSection heroMovie={movieList[0]} />
+      <div className="relative overflow-x-hidden">
+        {movieList.length > 2 ? (
+          <HeroSection heroMovies={movieList.slice(0, 3)} />
         ) : (
           <HeroSkeleton />
         )}
 
         <MovieListSection
-          ref={categorySectionRef}
           movieList={movieList}
         />
       </div>

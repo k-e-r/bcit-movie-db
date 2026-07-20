@@ -42,7 +42,7 @@ export const CategorySelector = () => {
           onClick={() => setIsCategoryOpen((prev) => !prev)}
         >
           <p className="w-[150px] uppercase">{selectCategory}</p>
-          <ChevronUpIcon className={`${isCategoryOpen ? "" : "rotate-180"} transition-all duration-300 ease-in-out w-[20px] h-auto`} aria-hidden="true" />
+          <ChevronUpIcon className={`${isCategoryOpen ? "" : "rotate-180"} transition-all duration-300 ease-in-out w-[20px] h-auto stroke-black`} aria-hidden="true" />
         </button>
 
         <div
