@@ -10,7 +10,7 @@ export const MovieCard = ({ movieData }) => {
   const movieDetailsPath = `/movies/${movieData.id}`;
 
   const addFavouriteMovie = (movie) => {
-    setAddFavourite((current) => !current);
+    setAddFavourite((prev) => !prev);
     console.log(movie);
   };
 
@@ -18,7 +18,6 @@ export const MovieCard = ({ movieData }) => {
     <article>
       <Link
         to={movieDetailsPath}
-        aria-label={`View details for ${movieData.title}`}
       >
         <div className="relative aspect-[2/3] overflow-hidden rounded-xl bg-gray-300">
           {isImageLoading && (
@@ -41,10 +40,10 @@ export const MovieCard = ({ movieData }) => {
         </div>
       </Link>
 
-      <div className="mt-2 sm:mt-3 flex items-start justify-between gap-3">
+      <div className="flex items-start justify-between gap-3">
         {isImageLoading ? (
           <div
-            className="flex-1 animate-pulse space-y-2"
+            className="mt-2 sm:mt-3 flex-1 animate-pulse space-y-2"
             aria-hidden="true"
           >
             <div className="h-5 w-2/3 rounded bg-gray-300" />
@@ -55,7 +54,7 @@ export const MovieCard = ({ movieData }) => {
               to={movieDetailsPath}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className={`${isHovered ? "text-gray-500" : ""} transition duration-300`}
+              className={`${isHovered ? "text-gray-500" : ""} pt-2 sm:pt-3 w-full transition duration-300`}
           >
             <h2 className="text-md sm:text-xl font-bold">
               {movieData.title}
@@ -69,14 +68,8 @@ export const MovieCard = ({ movieData }) => {
 
         <button
           type="button"
-          aria-label={
-            addFavourite
-              ? `Remove ${movieData.title} from favourites`
-              : `Add ${movieData.title} to favourites`
-          }
-          aria-pressed={addFavourite}
           onClick={() => addFavouriteMovie(movieData)}
-          className="w-8 sm:w-10 shrink-0 cursor-pointer"
+          className="mt-2 sm:mt-3 w-8 sm:w-10 shrink-0 cursor-pointer"
         >
           <HeartIcon
             className={`w-full transition-colors hover:fill-black ${
