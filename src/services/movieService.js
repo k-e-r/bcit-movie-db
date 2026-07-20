@@ -17,3 +17,7 @@ export const getCategoryMovies = (category = "now_playing") => {
 export const getMovieDetails = (movieId) => {
   return fetchMovieApi(`/api/movies/${movieId}`);
 };
+
+export const getMovieCredits = (movieId) => {
+  return fetchMovieApi(`/api/movies/${movieId}/credits`);
+};
