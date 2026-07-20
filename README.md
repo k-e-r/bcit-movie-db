@@ -155,6 +155,62 @@ fetch("/api/movies/550");
 * Erimo Taniguchi
 * Kaori Era
 
+## Team Responsibilities
+
+All team members will work on separate feature branches and use Pull Requests and code reviews before merging changes into the `staging` branch.
+
+Shared responsibilities include:
+
+- Following a mobile-first approach
+- Reviewing accessibility, responsive design, and code quality
+- Testing changes before merging
+
+### Member 1 — Shared Layout and Home Page
+
+Responsibilities include:
+
+- Setting up the React and Vite project
+- Configuring React Router and the initial folder structure
+- Creating the Header, Navigation, and Footer
+- Building mobile-friendly navigation
+- Building the Home page
+- Fetching and displaying movie lists
+- Adding category switching for Popular, Top Rated, Now Playing, and Upcoming
+- Displaying at least 12 movies
+- Creating the base Movie Card component
+- Adding links to individual Movie Details pages
+- Implementing loading, error, and skeleton states
+
+### Member 2 — Movie Details and Favourite Functionality
+
+Responsibilities include:
+
+- Building the Individual Movie Details page
+- Retrieving the movie ID from the URL
+- Fetching movie details and credits
+- Displaying the poster, title, release date, rating, plot summary, and related movie information
+- Displaying a placeholder when an image is unavailable
+- Building a reusable Favourite function
+- Adding and removing favourite movies using `localStorage`
+- Keeping favourite status after the page is refreshed
+- Organizing favourite-related logic into reusable hooks or utilities
+- Implementing loading and error states
+- Optionally adding accessible toast messages
+
+### Member 3 — My Favourites, About, and 404 Pages
+
+Responsibilities include:
+
+- Building the My Favourites page
+- Retrieving and displaying favourite movies from `localStorage`
+- Displaying an empty-state message when no favourites exist
+- Linking favourite movies to their Movie Details pages
+- Building the About page
+- Adding the TMDb logo and required attribution statement
+- Ensuring that the TMDb logo is less prominent than the application logo
+- Building a 404 Not Found page
+- Reviewing image alternative text and basic accessibility requirements
+
 ## Figma Design
 
 https://www.figma.com/design/DaRovEylQ27MruGGTDAK0T/Erimo-Kaori-Sandy-prototype?node-id=135-4&t=c7oWgYrVQDfRo9lq-1
