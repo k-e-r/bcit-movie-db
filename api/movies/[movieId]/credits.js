@@ -1,15 +1,15 @@
-export default async function getMovieDetails(request, response) {
+export default async function getMovieCredits(request, response) {
   const { movieId } = request.query;
 
   if (!movieId) {
     return response.status(400).json({
-      message: "Movie movieId is required.",
+      message: "Movie's movieId is required.",
     });
   }
 
   try {
     const tmdbResponse = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}`,
+      `https://api.themoviedb.org/3/movie/${movieId}/credits`,
       {
         headers: {
           Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
