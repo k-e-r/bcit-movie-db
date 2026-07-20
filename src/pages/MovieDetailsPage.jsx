@@ -25,6 +25,9 @@ export const MovieDetailsPage = () => {
           details,
           credits,
         });
+
+        console.log('details', details);
+        console.log('credits', credits);
       } catch (error) {
         console.error("Failed to fetch movie data:", error);
         setErrorMessage("Failed to load movie details.");
