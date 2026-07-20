@@ -5,6 +5,7 @@ import { Link } from "react-router";
 export const MovieCard = ({ movieData }) => {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [addFavourite, setAddFavourite] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   const movieDetailsPath = `/movies/${movieData.id}`;
 
@@ -17,7 +18,6 @@ export const MovieCard = ({ movieData }) => {
     <article>
       <Link
         to={movieDetailsPath}
-        className="group block"
         aria-label={`View details for ${movieData.title}`}
       >
         <div className="relative aspect-[2/3] overflow-hidden rounded-xl bg-gray-300">
@@ -34,9 +34,9 @@ export const MovieCard = ({ movieData }) => {
             loading="lazy"
             onLoad={() => setIsImageLoading(false)}
             onError={() => setIsImageLoading(false)}
-            className={`h-full w-full object-cover transition duration-300 group-hover:scale-105 ${
-              isImageLoading ? "opacity-0" : "opacity-100"
-            }`}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className={`${isImageLoading ? "opacity-0" : "opacity-100"} ${isHovered ? "scale-105" : ""} h-full w-full object-cover transition duration-300`}
           />
         </div>
       </Link>
@@ -52,8 +52,10 @@ export const MovieCard = ({ movieData }) => {
           </div>
         ) : (
           <Link
-            to={movieDetailsPath}
-            className="hover:text-gray-500"
+              to={movieDetailsPath}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              className={`${isHovered ? "text-gray-500" : ""} transition duration-300`}
           >
             <h2 className="text-md sm:text-xl font-bold">
               {movieData.title}
