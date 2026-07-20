@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 import { DesktopNav } from "./DesktopNav";
@@ -9,14 +9,36 @@ import { CloseIcon } from "../icons/CloseIcon";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  let prevScrollY = 0;
 
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > prevScrollY && currentScrollY > 200) {
+        setIsHeaderHidden(true);
+      } else {
+        setIsHeaderHidden(false);
+      }
+
+      prevScrollY = currentScrollY;
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    }
+  }, [])
+
   return (
     <>
-      <header className="sticky top-0 z-999 w-full bg-black">
+      <header className={`${isHeaderHidden ? "-top-20" : "top-0"} sticky z-999 w-full bg-black transition-all duration-500 ease-in-out`}>
         <div className="max-w-[1260px] py-5 px-4 sm:px-8 flex justify-between items-center m-auto">
           <Link to="/" aria-label="Go to Home">
             <LogoIcon className="brightness-0 invert w-[30px] h-auto hover:opacity-60 transition-all duration-300 ease-in-out" />
