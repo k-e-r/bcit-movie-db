@@ -69,7 +69,7 @@ export const MovieCard = ({ movieData }) => {
         <button
           type="button"
           onClick={() => addFavouriteMovie(movieData)}
-          className="mt-2 sm:mt-3 w-8 sm:w-10 shrink-0 cursor-pointer"
+          className="mt-2 sm:mt-3 w-8 sm:w-10 shrink-0"
         >
           <HeartIcon
             className={`w-full transition-colors hover:fill-black ${
