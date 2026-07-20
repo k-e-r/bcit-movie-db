@@ -66,15 +66,6 @@ If no favourite movies are stored, the application displays a message directing 
 
 Navigation is available on every page and supports both mobile and desktop layouts.
 
-### Loading and Error States
-
-The application includes:
-
-* Skeleton loading states
-* API error handling
-* Missing poster handling
-* Empty favourites messaging
-
 ## Technologies
 
 * React
@@ -163,6 +154,10 @@ fetch("/api/movies/550");
 * Sandy Lo
 * Erimo Taniguchi
 * Kaori Era
+
+## Figma Design
+
+https://www.figma.com/design/DaRovEylQ27MruGGTDAK0T/Erimo-Kaori-Sandy-prototype?node-id=135-4&t=c7oWgYrVQDfRo9lq-1
 
 ## Live Site (Staging)
 
