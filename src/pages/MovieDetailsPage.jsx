@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
-import { getMovieDetails, getMovieCredits } from "../services/movieService";
+import { getMovieDetails } from "../services/movieService";
 
 export const MovieDetailsPage = () => {
   const { movieId } = useParams();
 
-  const [movieData, setMovieData] = useState({details: "", credits: ""});
+  const [movieData, setMovieData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -16,13 +16,9 @@ export const MovieDetailsPage = () => {
       setErrorMessage("");
 
       try {
-        const movieDetails = await getMovieDetails(movieId);
-        setMovieData(prev => prev.details = movieDetails);
-        console.log('movieDetails', movieDetails);
-
-        const movieCredits = await getMovieCredits(movieId);
-        setMovieData(prev => prev.credits = movieCredits);
-        console.log('movieCredits', movieCredits);
+        const data = await getMovieDetails(movieId);
+        setMovieData(data);
+        console.log('movieDetails', data);
       } catch (error) {
         console.error("Failed to fetch movie details:", error);
         setErrorMessage("Failed to load movie details.");
