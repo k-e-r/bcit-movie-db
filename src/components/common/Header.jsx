@@ -20,7 +20,7 @@ export const Header = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > prevScrollY && currentScrollY > 200) {
+      if (currentScrollY > prevScrollY && currentScrollY > 200 && !isMenuOpen) {
         setIsHeaderHidden(true);
       } else {
         setIsHeaderHidden(false);
@@ -34,7 +34,7 @@ export const Header = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     }
-  }, [])
+  }, [isMenuOpen])
 
   return (
     <>
@@ -55,9 +55,9 @@ export const Header = () => {
             onClick={() => setIsMenuOpen((prev) => !prev)}
           >
             {!isMenuOpen ? (
-              <BurgerMenuIcon className="w-[25px] h-auto cursor-pointer" aria-hidden="true" />
+              <BurgerMenuIcon className="w-[25px] h-auto" aria-hidden="true" />
             ) : (
-              <CloseIcon className="w-[25px] h-auto cursor-pointer" aria-hidden="true" />
+              <CloseIcon className="w-[25px] h-auto" aria-hidden="true" />
             )}
           </button>
 
@@ -68,7 +68,7 @@ export const Header = () => {
       {isMenuOpen && (
         <button
           type="button"
-          className="fixed inset-0 z-2 bg-black/50 sm:hidden cursor-pointer"
+          className="fixed inset-0 z-2 bg-black/50 sm:hidden"
           aria-label="Close navigation"
           onClick={closeMenu}
         />

@@ -38,7 +38,7 @@ export const HeroSection = ({ heroMovies }) => {
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
                 isActive
                   ? "z-1 opacity-100"
-                  : "pointer-events-none z-0 opacity-0"
+                  : "z-0 opacity-0"
               }`}
             >
               <div className="relative">
@@ -74,7 +74,7 @@ export const HeroSection = ({ heroMovies }) => {
                 key={idx}
                 type="button"
                 onClick={() => selectSlide(idx)}
-                className="relative py-5 h-[1.5px] w-12 flex-1 overflow-hidden cursor-pointer"
+                className="relative py-5 h-[1.5px] w-12 flex-1 overflow-hidden"
               >
                   <span
                     className="absolute top-[50%] transform-y-[-50%] left-0 block h-[1.5px] w-12 origin-left bg-white/30"

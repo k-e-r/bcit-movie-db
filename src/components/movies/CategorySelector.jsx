@@ -37,7 +37,7 @@ export const CategorySelector = () => {
     <>
       <div className="relative flex justify-center my-12">
         <button
-          className="inline-flex sm:hidden items-center justify-center font-bold border rounded-full px-4 py-2.5 cursor-pointer"
+          className="inline-flex sm:hidden items-center justify-center font-bold border rounded-full px-4 py-2.5"
           type="button"
           onClick={() => setIsCategoryOpen((prev) => !prev)}
         >
@@ -50,7 +50,7 @@ export const CategorySelector = () => {
         >
           <ul className="pt-1 uppercase block sm:flex sm:justify-around" aria-labelledby="dropdownDefaultButton">
             {CATEGORY_LINKS.map(({ label, category }) => (
-              <li key={category} className="inline-flex items-center justify-center w-full cursor-pointer sm:w-35 md:w-51">
+              <li key={category} className="inline-flex items-center justify-center w-full sm:w-35 md:w-51">
                 <Link
                   className={`${selectCategory === label ? "bg-black text-white" : ""} block uppercase text-sm md:text-md font-bold w-full py-2 pr-5 text-center hover:bg-black hover:text-white sm:border sm:rounded-full sm:px-4 sm:py-2.5 sm:whitespace-nowrap transition-all duration-300 ease-in-out`}
                   to={`/?category=${category}`}
