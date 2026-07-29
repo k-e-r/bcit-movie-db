@@ -1,11 +1,16 @@
-import { Link } from "react-router-dom";
+import { PageLayout } from "../components/common/PageLayout";
+import { Button } from "../components/common/Button";
 
 export const NotFoundPage = () => {
-  return (
-    <>
-    <h1>404 Page Not Found</h1>
-    <p>The page you are looking for might have been removed or is temporarily unavailable.</p>
-    <Link to="/">Back to Home</Link>
-    </>
-  )
-}
+    return (
+      <PageLayout
+        title="404 Page Not Found"
+        subtitle="The page you are looking for might have been removed or is temporarily unavailable."
+      >
+
+      <Button to="/">
+          Back to Home
+      </Button>
+      </PageLayout>
+    );
+  }
