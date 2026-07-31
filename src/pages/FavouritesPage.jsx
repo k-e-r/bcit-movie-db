@@ -5,7 +5,7 @@ export const FavouritesPage = ({ favorites = [] }) => {
     return (
       <PageLayout
         title="FAVOURITES"
-        subtitle="Your spotlight is waiting!"
+        subtitle="Your spotlight is waiting"
         description="You haven't added any movies to your favorites yet. Save movies you love and they'll appear here."
       />
     );
