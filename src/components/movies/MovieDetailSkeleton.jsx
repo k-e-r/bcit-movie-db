@@ -26,6 +26,10 @@ export const MovieDetailCastSkeleton = () => {
   )
 }
 
+export const MovieDetailTrailerSkeleton = () => {
+  return <div aria-hidden="true" className="w-full aspect-video mb-[175px] animate-pulse bg-gray-500"></div>
+}
+
 export const BackdropSkeleton = () => {
   return (
     <div

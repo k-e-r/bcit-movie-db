@@ -10,6 +10,7 @@ import {
   MovieDetailInfoSkeleton,
   MovieDetailLoadingStatus,
   MovieDetailTitleSkeleton,
+  MovieDetailTrailerSkeleton,
   SkeletonLoading,
 } from '../components/movies/MovieDetailSkeleton'
 import { useFavourites } from '../hooks/useFavourites'
@@ -105,7 +106,8 @@ export const MovieDetailsPage = () => {
           <section>
             <h2 className="movie-detail-subtitle">Cast</h2>
             <SkeletonLoading skeleton={<MovieDetailCastSkeleton />} isLoading={isLoading}>
-              <div className="flex w-full overflow-x-auto gap-2 lg:gap-3 pb-2">
+              <div
+                className={`flex w-full overflow-x-auto gap-2 lg:gap-3 pb-2 ${trailers?.length === 0 && 'mb-[175px]'}`}>
                 {casts?.map(({ name, src }, i) => (
                   <div key={i} className="w-[100px] lg:w-[200px] shrink-0">
                     <img
@@ -119,20 +121,22 @@ export const MovieDetailsPage = () => {
               </div>
             </SkeletonLoading>
           </section>
-          {trailers?.length > 0 && (
+          {(isLoading || trailers?.length > 0) && (
             <section>
               <h2 className="movie-detail-subtitle">Trailer</h2>
-              {trailers?.map((el, i) => (
-                <iframe
-                  key={i}
-                  className="w-full aspect-video not-last:mb-20 last:mb-[175px]"
-                  src={el}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen></iframe>
-              ))}
+              <SkeletonLoading skeleton={<MovieDetailTrailerSkeleton />} isLoading={isLoading}>
+                {trailers?.map((el, i) => (
+                  <iframe
+                    key={i}
+                    className="w-full aspect-video not-last:mb-8 lg:not-last:mb-20 last:mb-[175px]"
+                    src={el}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen></iframe>
+                ))}
+              </SkeletonLoading>
             </section>
           )}
         </div>
