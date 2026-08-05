@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
+import { Button } from '../components/common/Button'
 import { PageLayout } from '../components/common/PageLayout'
 import { HeartIcon } from '../components/icons/HeartIcon'
 import {
   BackdropSkeleton,
+  MovieDetailCastSkeleton,
   MovieDetailContentSkeleton,
   MovieDetailInfoSkeleton,
   MovieDetailLoadingStatus,
   MovieDetailTitleSkeleton,
+  MovieDetailTrailerSkeleton,
   SkeletonLoading,
 } from '../components/movies/MovieDetailSkeleton'
 import { useFavourites } from '../hooks/useFavourites'
@@ -25,10 +28,12 @@ export const MovieDetailsPage = () => {
 
   const releasedYear = String(new Date(movieData.details?.release_date).getFullYear()) || ''
   const formattedRuntime = `${Math.floor(movieData.details?.runtime / 60)}h ${movieData.details?.runtime % 60}m`
-  const formattedCast =
-    movieData.credits?.cast?.reduce((prev, { name }) => (prev ? `${prev} / ${name}` : name), '') || ''
   const formattedRate = movieData.details?.vote_average?.toFixed(1)
   const posterUrl = `${TMDB_IMAGE_BASE_URL}${movieData.details?.backdrop_path}`
+  const casts = movieData.credits?.cast?.map(({ name, profile_path }) => ({
+    name,
+    src: profile_path ? `${TMDB_IMAGE_BASE_URL}${profile_path}` : null,
+  }))
   const trailers = movieData.videos.results
     ?.filter(({ type, site }) => type === 'Trailer' && site === 'YouTube')
     .map(({ key }) => `${YOUTUBE_EMBED_URL}/${key}`)
@@ -100,24 +105,38 @@ export const MovieDetailsPage = () => {
           </section>
           <section>
             <h2 className="movie-detail-subtitle">Cast</h2>
-            <SkeletonLoading skeleton={<MovieDetailContentSkeleton />} isLoading={isLoading}>
-              <p className="text-xs lg:text-2xl">{formattedCast}</p>
+            <SkeletonLoading skeleton={<MovieDetailCastSkeleton />} isLoading={isLoading}>
+              <div
+                className={`flex w-full overflow-x-auto gap-2 lg:gap-3 pb-2 ${trailers?.length === 0 && 'mb-[175px]'}`}>
+                {casts?.map(({ name, src }, i) => (
+                  <div key={i} className="w-[100px] lg:w-[200px] shrink-0">
+                    <img
+                      src={src}
+                      alt=""
+                      className={`w-full h-[160px] lg:h-[300px] object-cover mb-2 lg:mb-3 ${src ? '' : 'bg-gray-200'}`}
+                    />
+                    <p className="text-center text-xs lg:text-2xl">{name}</p>
+                  </div>
+                ))}
+              </div>
             </SkeletonLoading>
           </section>
-          {trailers?.length > 0 && (
+          {(isLoading || trailers?.length > 0) && (
             <section>
               <h2 className="movie-detail-subtitle">Trailer</h2>
-              {trailers?.map((el, i) => (
-                <iframe
-                  key={i}
-                  className="w-full aspect-video not-last:mb-20 last:mb-[175px]"
-                  src={el}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen></iframe>
-              ))}
+              <SkeletonLoading skeleton={<MovieDetailTrailerSkeleton />} isLoading={isLoading}>
+                {trailers?.map((el, i) => (
+                  <iframe
+                    key={i}
+                    className="w-full aspect-video not-last:mb-8 lg:not-last:mb-20 last:mb-[175px]"
+                    src={el}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen></iframe>
+                ))}
+              </SkeletonLoading>
             </section>
           )}
         </div>
@@ -145,12 +164,7 @@ const MovieDetailsError = ({ errorMessage }) => {
 
   return (
     <PageLayout subtitle={errorMessage}>
-      <button
-        type="button"
-        onClick={() => navigate(-1)}
-        className="hover:text-gray-400 transition-colors duration-300 ease-in-out underline underline-offset-1">
-        Go back
-      </button>
+      <Button onClick={() => navigate(-1)}>Go back</Button>
     </PageLayout>
   )
 }

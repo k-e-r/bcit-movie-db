@@ -17,6 +17,19 @@ export const MovieDetailContentSkeleton = () => {
   )
 }
 
+export const MovieDetailCastSkeleton = () => {
+  return (
+    <div aria-hidden="true" className="w-fit">
+      <div className="w-[100px] lg:w-[200px] h-[160px] lg:h-[300px] mb-2 lg:mb-3 animate-pulse bg-gray-500"></div>
+      <div className="h-4 w-2/3 rounded bg-gray-300 animate-pulse mx-auto" />
+    </div>
+  )
+}
+
+export const MovieDetailTrailerSkeleton = () => {
+  return <div aria-hidden="true" className="w-full aspect-video mb-[175px] animate-pulse bg-gray-500"></div>
+}
+
 export const BackdropSkeleton = () => {
   return (
     <div
