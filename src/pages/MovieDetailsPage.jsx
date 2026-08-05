@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
+import { PageLayout } from '../components/common/PageLayout'
 import { HeartIcon } from '../components/icons/HeartIcon'
 import {
   BackdropSkeleton,
@@ -16,6 +17,7 @@ const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original'
 
 export const MovieDetailsPage = () => {
   const { movieId } = useParams()
+  const navigate = useNavigate()
 
   const [movieData, setMovieData] = useState({ details: '', credits: '' })
   const [isLoading, setIsLoading] = useState(true)
@@ -56,6 +58,8 @@ export const MovieDetailsPage = () => {
     }
   }, [movieId])
 
+  if (errorMessage) return <MovieDetailsError errorMessage={errorMessage} />
+
   return (
     <div aria-busy={isLoading}>
       <MovieDetailLoadingStatus isLoading={isLoading} />
@@ -66,6 +70,7 @@ export const MovieDetailsPage = () => {
           className="mx-auto mb-[47px] md:mb-[65px] lg:mb-[80px] h-[470px] lg:h-[1080px] object-cover"
         />
       </SkeletonLoading>
+
       <div className="mx-auto max-w-[300px] md:max-w-[674px] lg:max-w-[1260px]">
         <div className="flex flex-col gap-[40px] lg:gap-[80px]">
           <section>
@@ -113,5 +118,18 @@ const FavouriteButton = ({ movieId }) => {
       className="w-7 md:w-9 lg:w-11">
       <HeartIcon className={`w-full pt-1 transition-colors hover:fill-black ${isFavourite ? 'fill-black' : ''}`} />
     </button>
+  )
+}
+
+const MovieDetailsError = ({ errorMessage }) => {
+  return (
+    <PageLayout subtitle={errorMessage}>
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className="hover:text-gray-400 transition-colors duration-300 ease-in-out underline underline-offset-1">
+        Go back
+      </button>
+    </PageLayout>
   )
 }
