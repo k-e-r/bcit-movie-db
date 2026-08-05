@@ -63,14 +63,14 @@ export const MovieDetailsPage = () => {
         <img
           src={posterUrl}
           alt=""
-          className="mx-auto mb-[2.9375rem] md:mb-[4.0625rem] lg:mb-[5rem] h-[29.375rem] lg:h-[67.5rem] object-cover"
+          className="mx-auto mb-[47px] md:mb-[65px] lg:mb-[80px] h-[470px] lg:h-[1080px] object-cover"
         />
       </SkeletonLoading>
-      <div className="mx-auto max-w-[18.75rem] md:max-w-[42.125rem] lg:max-w-[78.75rem]">
-        <div className="flex flex-col gap-[2.5rem] lg:gap-[5rem]">
+      <div className="mx-auto max-w-[300px] md:max-w-[674px] lg:max-w-[1260px]">
+        <div className="flex flex-col gap-[40px] lg:gap-[80px]">
           <section>
             <SkeletonLoading skeleton={<MovieDetailTitleSkeleton />} isLoading={isLoading}>
-              <div className="flex items-center gap-2.5 md:gap-3 mb-[.625rem] lg:mb-[2.5rem]">
+              <div className="flex items-center gap-2.5 md:gap-3 mb-[10px] lg:mb-[40px]">
                 <h1 className="font-bold inline-block text-2xl md:text-4xl lg:text-5xl">{movieData.details?.title}</h1>
                 <FavouriteButton movieId={movieData.details?.id} />
               </div>
