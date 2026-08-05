@@ -21,3 +21,7 @@ export const getMovieDetails = (movieId) => {
 export const getMovieCredits = (movieId) => {
   return fetchMovieApi(`/api/movies/${movieId}/credits`);
 };
+
+export const getMovieVideos = (movieId) => {
+  return fetchMovieApi(`/api/movies/${movieId}/videos`);
+};

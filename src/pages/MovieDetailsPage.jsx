@@ -11,15 +11,15 @@ import {
   SkeletonLoading,
 } from '../components/movies/MovieDetailSkeleton'
 import { useFavourites } from '../hooks/useFavourites'
-import { getMovieCredits, getMovieDetails } from '../services/movieService'
+import { getMovieCredits, getMovieDetails, getMovieVideos } from '../services/movieService'
 
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original'
+const YOUTUBE_EMBED_URL = 'https://www.youtube.com/embed'
 
 export const MovieDetailsPage = () => {
   const { movieId } = useParams()
-  const navigate = useNavigate()
 
-  const [movieData, setMovieData] = useState({ details: '', credits: '' })
+  const [movieData, setMovieData] = useState({ details: '', credits: '', videos: {} })
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -29,6 +29,9 @@ export const MovieDetailsPage = () => {
     movieData.credits?.cast?.reduce((prev, { name }) => (prev ? `${prev} / ${name}` : name), '') || ''
   const formattedRate = movieData.details?.vote_average?.toFixed(1)
   const posterUrl = `${TMDB_IMAGE_BASE_URL}${movieData.details?.backdrop_path}`
+  const trailers = movieData.videos.results
+    ?.filter(({ type, site }) => type === 'Trailer' && site === 'YouTube')
+    .map(({ key }) => `${YOUTUBE_EMBED_URL}/${key}`)
 
   useEffect(() => {
     const fetchMovieData = async () => {
@@ -37,14 +40,17 @@ export const MovieDetailsPage = () => {
 
       try {
         const [details, credits] = await Promise.all([getMovieDetails(movieId), getMovieCredits(movieId)])
+        const videos = await getMovieVideos(movieId)
 
         setMovieData({
           details,
           credits,
+          videos,
         })
 
         console.log('details', details)
         console.log('credits', credits)
+        console.log('videos', videos)
       } catch (error) {
         console.error('Failed to fetch movie data:', error)
         setErrorMessage('Failed to load movie details.')
@@ -98,9 +104,22 @@ export const MovieDetailsPage = () => {
               <p className="text-xs lg:text-2xl">{formattedCast}</p>
             </SkeletonLoading>
           </section>
-          <section>
-            <h2 className="movie-detail-subtitle">Trailer</h2>
-          </section>
+          {trailers?.length > 0 && (
+            <section>
+              <h2 className="movie-detail-subtitle">Trailer</h2>
+              {trailers?.map((el, i) => (
+                <iframe
+                  key={i}
+                  className="w-full aspect-video not-last:mb-20 last:mb-[175px]"
+                  src={el}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen></iframe>
+              ))}
+            </section>
+          )}
         </div>
       </div>
     </div>
@@ -122,6 +141,8 @@ const FavouriteButton = ({ movieId }) => {
 }
 
 const MovieDetailsError = ({ errorMessage }) => {
+  const navigate = useNavigate()
+
   return (
     <PageLayout subtitle={errorMessage}>
       <button
