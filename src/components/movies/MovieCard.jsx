@@ -54,7 +54,7 @@ export const MovieCard = ({ movieData }) => {
               to={movieDetailsPath}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className={`${isHovered ? "text-gray-500" : ""} pt-2 sm:pt-3 w-full transition duration-300`}
+              className={`pt-2 sm:pt-3 w-full`}
           >
             <h2 className="text-md sm:text-xl font-bold">
               {movieData.title}
