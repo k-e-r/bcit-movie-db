@@ -75,7 +75,7 @@ export const MovieCard = ({ movieData }) => {
         >
           <HeartIcon
             className={`w-full transition-colors hover:fill-black ${
-              addFavourite ? "fill-black" : ""
+              addFavourite ? "fill-red-500" : ""
             }`}
           />
         </button>
