@@ -84,7 +84,7 @@ export const HeroSection = ({ heroMovies }) => {
                   <span
                     className="absolute top-[50%] transform-y-[-50%] left-0 block h-[1.5px] w-12 origin-left bg-white"
                     style={{
-                      animation: `hero-progress 10000ms linear`,
+                      animation: `hero-progress 8000ms linear`,
                     }}
                     onAnimationEnd={showNextSlide}
                   />

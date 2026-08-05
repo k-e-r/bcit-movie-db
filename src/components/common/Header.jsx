@@ -41,7 +41,7 @@ export const Header = () => {
       <header className={`${isHeaderHidden ? "-top-20" : "top-0"} sticky z-999 w-full bg-black transition-all duration-500 ease-in-out`}>
         <div className="max-w-[1260px] py-5 px-4 sm:px-8 flex justify-between items-center m-auto">
           <Link to="/" aria-label="Go to Home">
-            <LogoIcon className="brightness-0 invert w-[30px] h-auto hover:opacity-60 transition-all duration-300 ease-in-out" />
+            <LogoIcon className="brightness-0 invert w-[30px] h-auto transition-all duration-300 ease-in-out" />
           </Link>
 
           <DesktopNav />
