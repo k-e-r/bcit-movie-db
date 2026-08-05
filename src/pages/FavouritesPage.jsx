@@ -1,6 +1,17 @@
+import { useState, useEffect } from "react";
 import { PageLayout } from "../components/common/PageLayout";
+import { MovieList } from "../components/movies/MovieList";
+import { getStoredFavorites } from "../components/utils/favouriteMovies";
 
-export const FavouritesPage = ({ favorites = [] }) => {
+export const FavouritesPage = () => {
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    const stored = getStoredFavorites();
+    setFavorites(stored);
+    console.log("movie", stored);
+  }, []);
+
   if (favorites.length === 0) {
     return (
       <PageLayout
@@ -12,9 +23,8 @@ export const FavouritesPage = ({ favorites = [] }) => {
   }
 
   return (
-    <PageLayout 
-      title="FAVOURITES">
+    <PageLayout title="FAVOURITES">
+      <MovieList movieList={favorites} />
     </PageLayout>
   );
 };
-
