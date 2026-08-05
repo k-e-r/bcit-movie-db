@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-
-import { getMovieCredits, getMovieDetails } from '../services/movieService'
-
+import { HeartIcon } from '../components/icons/HeartIcon'
 import {
   BackdropSkeleton,
   MovieDetailContentSkeleton,
@@ -11,6 +9,8 @@ import {
   MovieDetailTitleSkeleton,
   SkeletonLoading,
 } from '../components/movies/MovieDetailSkeleton'
+import { useFavourites } from '../hooks/useFavourites'
+import { getMovieCredits, getMovieDetails } from '../services/movieService'
 
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original'
 
@@ -22,7 +22,7 @@ export const MovieDetailsPage = () => {
   const [errorMessage, setErrorMessage] = useState('')
 
   const releasedYear = String(new Date(movieData.details?.release_date).getFullYear()) || ''
-  const formattedRuntime = `${Math.floor(movieData.details?.runtime / 60)}h ${movieData.details?.runtime % 60}m` || ''
+  const formattedRuntime = `${Math.floor(movieData.details?.runtime / 60)}h ${movieData.details?.runtime % 60}m`
   const formattedCast =
     movieData.credits?.cast?.reduce((prev, { name }) => (prev ? `${prev} / ${name}` : name), '') || ''
   const formattedRate = movieData.details?.vote_average?.toFixed(1)
@@ -63,16 +63,17 @@ export const MovieDetailsPage = () => {
         <img
           src={posterUrl}
           alt=""
-          className="mb-[2.9375rem] md:mb-[4.0625rem] lg:mb-[5rem] h-[29.375rem] lg:h-[67.5rem] object-cover"
+          className="mx-auto mb-[2.9375rem] md:mb-[4.0625rem] lg:mb-[5rem] h-[29.375rem] lg:h-[67.5rem] object-cover"
         />
       </SkeletonLoading>
       <div className="mx-auto max-w-[18.75rem] md:max-w-[42.125rem] lg:max-w-[78.75rem]">
         <div className="flex flex-col gap-[2.5rem] lg:gap-[5rem]">
           <section>
             <SkeletonLoading skeleton={<MovieDetailTitleSkeleton />} isLoading={isLoading}>
-              <h1 className="font-bold text-2xl md:text-4xl lg:text-5xl mb-[.625rem] lg:mb-[2.5rem]">
-                {movieData.details?.title}
-              </h1>
+              <div className="flex items-center gap-2.5 md:gap-3 mb-[.625rem] lg:mb-[2.5rem]">
+                <h1 className="font-bold inline-block text-2xl md:text-4xl lg:text-5xl">{movieData.details?.title}</h1>
+                <FavouriteButton movieId={movieData.details?.id} />
+              </div>
             </SkeletonLoading>
             <SkeletonLoading skeleton={<MovieDetailInfoSkeleton />} isLoading={isLoading}>
               <p className="font-bold text-lg lg:text-4xl">
@@ -98,5 +99,19 @@ export const MovieDetailsPage = () => {
         </div>
       </div>
     </div>
+  )
+}
+
+const FavouriteButton = ({ movieId }) => {
+  const { isFavourite, toggleFavouriteMovie } = useFavourites(movieId)
+
+  return (
+    <button
+      type="button"
+      aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
+      onClick={toggleFavouriteMovie}
+      className="w-7 md:w-9 lg:w-11">
+      <HeartIcon className={`w-full pt-1 transition-colors hover:fill-black ${isFavourite ? 'fill-black' : ''}`} />
+    </button>
   )
 }
