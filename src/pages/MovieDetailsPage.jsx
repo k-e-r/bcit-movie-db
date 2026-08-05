@@ -28,7 +28,7 @@ export const MovieDetailsPage = () => {
   const formattedCast =
     movieData.credits?.cast?.reduce((prev, { name }) => (prev ? `${prev} / ${name}` : name), '') || ''
   const formattedRate = movieData.details?.vote_average?.toFixed(1)
-  const posterUrl = `${TMDB_IMAGE_BASE_URL}/${movieData.details?.backdrop_path}`
+  const posterUrl = `${TMDB_IMAGE_BASE_URL}${movieData.details?.backdrop_path}`
 
   useEffect(() => {
     const fetchMovieData = async () => {
