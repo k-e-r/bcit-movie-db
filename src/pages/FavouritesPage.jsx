@@ -28,7 +28,7 @@ export const FavouritesPage = () => {
     );
   }
   return (
-    <div className="w-full flex flex-col items-center text-center px-4 pt-24 pb-32 md:pt-[200px] md:pb-[300px]">
+    <div className="w-full flex flex-col items-center px-4 pt-24 pb-32 md:pt-[200px] md:pb-[300px]">
       <h1 className="text-4xl md:text-[64px] font-bold tracking-wider mb-16 md:mb-[124px] leading-tight">
         FAVOURITES  
       </h1>
