@@ -19,7 +19,16 @@ export const DesktopNav = () => {
           <li key={path}>
             <NavLink
               to={path}
-              className={({ isActive }) => `uppercase nav-link${isActive ? " active" : ""} font-semibold text-white hover:text-gray-400 transition-colors duration-300 ease-in-out`}
+              className={({ isActive }) =>
+                `relative uppercase font-semibold text-white
+                after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full
+                after:origin-left after:bg-white after:transition-transform after:duration-300
+                ${
+                  isActive
+                    ? "after:scale-x-100"
+                    : "after:scale-x-0 hover:after:scale-x-100"
+                }`
+              }
             >
               {label}
             </NavLink>
