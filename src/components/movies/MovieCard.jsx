@@ -1,20 +1,13 @@
 import { useEffect, useState } from "react";
-import { HeartIcon } from "../icons/HeartIcon";
 import { Link } from "react-router";
-import { isFavoriteMovie, toggleFavoriteMovie } from "../utils/favouriteMovies";
+
+import { FavouriteButton } from "../common/FavouriteButton";
 
 export const MovieCard = ({ movieData }) => {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  const [addFavourite, setAddFavourite] = useState(() => isFavoriteMovie(movieData));
 
   const movieDetailsPath = `/movies/${movieData.id}`;
-
-  const handleFavouriteClick = (movie) => {
-    const isNowFavorite = toggleFavoriteMovie(movie);
-    setAddFavourite(isNowFavorite);
-    console.log(movie);
-  };
 
   return (
     <article>
@@ -68,17 +61,10 @@ export const MovieCard = ({ movieData }) => {
           </Link>
         )}
 
-        <button
-          type="button"
-          onClick={() => handleFavouriteClick(movieData)}
-          className="mt-2 sm:mt-3 w-8 sm:w-10 shrink-0"
-        >
-          <HeartIcon
-            className={`w-full transition-colors hover:fill-black ${
-              addFavourite ? "fill-red-500" : ""
-            }`}
-          />
-        </button>
+        <FavouriteButton
+          movieData={movieData}
+          className="mt-2 w-8 sm:mt-3 sm:w-10 stroke-3"
+        />
       </div>
     </article>
   );

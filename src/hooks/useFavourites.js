@@ -1,21 +1,60 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-const FAVOURITE_MOVIES_KEY = 'bcitMovieDb:favouriteMovies'
+const FAVOURITE_MOVIES_KEY = "bcitMovieDb:favouriteMovies";
 
-export const useFavourites = movieId => {
-  const favouriteMovies = JSON.parse(localStorage.getItem(FAVOURITE_MOVIES_KEY) || '[]')
-  const isFavouriteMovieExisted = Array.isArray(favouriteMovies) ? favouriteMovies?.includes(movieId) : false
+const getStoredFavorites = () => {
+  try {
+    const savedFavorites = localStorage.getItem(FAVOURITE_MOVIES_KEY);
+    const parsedFavorites = savedFavorites
+      ? JSON.parse(savedFavorites)
+      : [];
 
-  const [isFavourite, setIsFavourite] = useState(isFavouriteMovieExisted)
+    if (!Array.isArray(parsedFavorites)) {
+      return [];
+    }
 
-  const toggleFavouriteMovie = () => {
-    const updatedFavouriteMovies = isFavouriteMovieExisted
-      ? favouriteMovies.filter(el => el !== movieId)
-      : [...favouriteMovies, movieId]
-
-    localStorage.setItem(FAVOURITE_MOVIES_KEY, JSON.stringify(updatedFavouriteMovies))
-    setIsFavourite(el => !el)
+    return parsedFavorites.filter((movie) => movie?.id != null);
+  } catch (error) {
+    console.error("Failed to read favorites:", error);
+    return [];
   }
+};
 
-  return { isFavourite, toggleFavouriteMovie }
-}
+export const useFavourites = () => {
+  const [favorites, setFavorites] = useState(getStoredFavorites);
+
+  const toggleFavouriteMovie = (movie) => {
+    if (movie?.id == null) return;
+
+    setFavorites((currentFavorites) => {
+      const exists = currentFavorites.some(
+        (favorite) => favorite.id === movie.id
+      );
+
+      const updatedFavorites = exists
+        ? currentFavorites.filter(
+            (favorite) => favorite.id !== movie.id
+          )
+        : [...currentFavorites, movie];
+
+      localStorage.setItem(
+        FAVOURITE_MOVIES_KEY,
+        JSON.stringify(updatedFavorites)
+      );
+
+      return updatedFavorites;
+    });
+  };
+
+  const isFavouriteMovie = (movieId) => {
+    if (movieId == null) return false;
+
+    return favorites.some((movie) => movie.id === movieId);
+  };
+
+  return {
+    favorites,
+    isFavouriteMovie,
+    toggleFavouriteMovie,
+  };
+};

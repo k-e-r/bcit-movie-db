@@ -13,8 +13,8 @@ import {
   MovieDetailTrailerSkeleton,
   SkeletonLoading,
 } from '../components/movies/MovieDetailSkeleton'
-import { useFavourites } from '../hooks/useFavourites'
 import { getMovieCredits, getMovieDetails, getMovieVideos } from '../services/movieService'
+import { FavouriteButton } from '../components/common/FavouriteButton'
 
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original'
 const YOUTUBE_EMBED_URL = 'https://www.youtube.com/embed'
@@ -86,9 +86,9 @@ export const MovieDetailsPage = () => {
         <div className="flex flex-col gap-[40px] lg:gap-[80px]">
           <section>
             <SkeletonLoading skeleton={<MovieDetailTitleSkeleton />} isLoading={isLoading}>
-              <div className="flex items-center gap-2.5 md:gap-3 mb-[10px] lg:mb-[40px]">
+              <div className="flex items-start gap-3 md:gap-5 mb-[10px] lg:mb-[40px]">
                 <h1 className="font-bold inline-block text-2xl md:text-4xl lg:text-5xl">{movieData.details?.title}</h1>
-                <FavouriteButton movieId={movieData.details?.id} />
+                <FavouriteButton movieData={movieData.details} className="w-8 sm:w-10 stroke-3" />
               </div>
             </SkeletonLoading>
             <SkeletonLoading skeleton={<MovieDetailInfoSkeleton />} isLoading={isLoading}>
@@ -142,20 +142,6 @@ export const MovieDetailsPage = () => {
         </div>
       </div>
     </div>
-  )
-}
-
-const FavouriteButton = ({ movieId }) => {
-  const { isFavourite, toggleFavouriteMovie } = useFavourites(movieId)
-
-  return (
-    <button
-      type="button"
-      aria-label={isFavourite ? 'Remove from favourites' : 'Add to favourites'}
-      onClick={toggleFavouriteMovie}
-      className="w-7 md:w-9 lg:w-11">
-      <HeartIcon className={`w-full pt-1 transition-colors hover:fill-black ${isFavourite ? 'fill-black' : ''}`} />
-    </button>
   )
 }
 
