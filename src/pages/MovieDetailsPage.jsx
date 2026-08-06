@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { Button } from '../components/common/Button'
 import { PageLayout } from '../components/common/PageLayout'
-import { HeartIcon } from '../components/icons/HeartIcon'
 import {
   BackdropSkeleton,
   MovieDetailCastSkeleton,
