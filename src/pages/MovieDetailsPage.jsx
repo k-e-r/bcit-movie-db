@@ -52,10 +52,6 @@ export const MovieDetailsPage = () => {
           credits,
           videos,
         })
-
-        console.log('details', details)
-        console.log('credits', credits)
-        console.log('videos', videos)
       } catch (error) {
         console.error('Failed to fetch movie data:', error)
         setErrorMessage('Failed to load movie details.')
@@ -86,7 +82,7 @@ export const MovieDetailsPage = () => {
         <div className="flex flex-col gap-[40px] lg:gap-[80px]">
           <section>
             <SkeletonLoading skeleton={<MovieDetailTitleSkeleton />} isLoading={isLoading}>
-              <div className="flex items-start gap-3 md:gap-5 mb-[10px] lg:mb-[40px]">
+              <div className="flex items-center gap-3 md:gap-5 mb-[10px] lg:mb-[40px]">
                 <h1 className="font-bold inline-block text-2xl md:text-4xl lg:text-5xl">{movieData.details?.title}</h1>
                 <FavouriteButton movieData={movieData.details} className="w-8 sm:w-10 stroke-3" />
               </div>
