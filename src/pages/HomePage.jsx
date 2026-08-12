@@ -147,7 +147,9 @@ export const HomePage = () => {
     newParams.set("category", category);
     newParams.set("page", String(page));
 
-    setSearchParams(newParams);
+    setSearchParams(newParams, {
+      preventScrollReset: true,
+    });
 
     movieListRef.current?.scrollIntoView({
       behavior: "smooth",
