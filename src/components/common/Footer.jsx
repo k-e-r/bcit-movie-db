@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { useToast } from "../../hooks/useToast";
 
 const CATEGORY_LINKS = [
   {
@@ -21,27 +22,36 @@ const CATEGORY_LINKS = [
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { showToast } = useToast();
 
   return (
-    <footer className="max-w-[1260px] pt-15 px-4 sm:px-8 m-auto">
+    <footer className="max-w-[1260px] px-4 sm:px-8 m-auto">
       <div className="flex justify-between flex-col sm:flex-row flex-col-reverse sm:flex-row">
         <div className="mt-13 sm:mt-0">
           <Link to="/" aria-label="Movie App home">
-            <p className="uppercase text-2xl font-bold hover:text-gray-400 transition-colors duration-300 ease-in-out">Movie App</p>
+            <p className="uppercase text-2xl font-bold">Movie App</p>
           </Link>
         </div>
 
         <nav className="flex flex-col gap-2"
           aria-label="Footer navigation"
         >
-          <Link className="uppercase font-bold hover:text-gray-400 transition-colors duration-300 ease-in-out" to="/">Home</Link>
+          <Link className="uppercase font-bold" to="/">Home</Link>
 
           <ul className="flex flex-col gap-2 pl-3">
             {CATEGORY_LINKS.map(({ label, category }) => (
               <li key={category}>
                 <Link
-                  className="uppercase hover:text-gray-400 transition-colors duration-300 ease-in-out"
                   to={`/?category=${category}`}
+                  onClick={() => showToast(`Showing ${label} movies`)}
+                  className="
+                    relative inline-block uppercase
+                    after:absolute after:left-0 after:-bottom-0
+                    after:h-px after:w-full after:bg-current
+                    after:origin-left after:scale-x-0
+                    after:transition-transform after:duration-300 after:ease-in-out
+                    hover:after:scale-x-100
+                  "
                 >
                   {label}
                 </Link>
@@ -49,8 +59,8 @@ export const Footer = () => {
             ))}
           </ul>
 
-          <Link className="uppercase font-bold hover:text-gray-400 transition-colors duration-300 ease-in-out" to="/favourites">Favourites</Link>
-          <Link className="uppercase font-bold hover:text-gray-400 transition-colors duration-300 ease-in-out" to="/about">About</Link>
+          <Link className="uppercase font-bold" to="/favourites">Favourites</Link>
+          <Link className="uppercase font-bold" to="/about">About</Link>
         </nav>
       </div>
 

@@ -1,22 +1,15 @@
-const CATEGORIES = [
-  "popular",
-  "top_rated",
-  "now_playing",
-  "upcoming",
-];
+export default async function getMovieCredits(request, response) {
+  const { movieId } = request.query;
 
-export default async function getCategoryMovies(request, response) {
-  const category = request.query.category ?? "now_playing";
-
-  if (!CATEGORIES.includes(category)) {
+  if (!movieId) {
     return response.status(400).json({
-      message: "Invalid movie category.",
+      message: "Movie's movieId is required.",
     });
   }
 
   try {
     const tmdbResponse = await fetch(
-      `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`,
+      `https://api.themoviedb.org/3/movie/${movieId}/credits`,
       {
         headers: {
           Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,
@@ -34,7 +27,7 @@ export default async function getCategoryMovies(request, response) {
       });
 
       return response.status(tmdbResponse.status).json({
-        message: "Failed to fetch movies from TMDb.",
+        message: "Failed to fetch movie details from TMDb.",
         tmdbStatus: tmdbResponse.status,
         tmdbError: data,
       });

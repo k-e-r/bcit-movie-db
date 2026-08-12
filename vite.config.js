@@ -8,4 +8,14 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://bcit-movie-db-git-staging-kes-projects-3f83c4b4.vercel.app",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 })
