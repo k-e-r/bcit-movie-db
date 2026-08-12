@@ -61,6 +61,7 @@ export const HomePage = () => {
   useEffect(() => {
     const updateMovieList = async () => {
       setIsLoading(true);
+      setMovieList([]);
 
       try {
         const startIndex =
@@ -171,7 +172,10 @@ export const HomePage = () => {
         ref={movieListRef}
         className="scroll-mt-20"
       >
-        <MovieListSection movieList={movieList} />
+        <MovieListSection
+          movieList={movieList}
+          isLoading={isLoading}
+        />
       </div>
 
       {!isLoading && totalPages > 1 && (

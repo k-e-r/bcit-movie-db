@@ -165,7 +165,7 @@ Shared responsibilities include:
 - Reviewing accessibility, responsive design, and code quality
 - Testing changes before merging
 
-### Member 1 — Shared Layout and Home Page
+### Kaori — Shared Layout and Home Page
 
 Responsibilities include:
 
@@ -181,7 +181,7 @@ Responsibilities include:
 - Adding links to individual Movie Details pages
 - Implementing loading, error, and skeleton states
 
-### Member 2 — Movie Details and Favourite Functionality
+### Sandy — Movie Details and Favourite Functionality
 
 Responsibilities include:
 
@@ -197,7 +197,7 @@ Responsibilities include:
 - Implementing loading and error states
 - Optionally adding accessible toast messages
 
-### Member 3 — My Favourites, About, and 404 Pages
+### Erimo — My Favourites, About, and 404 Pages
 
 Responsibilities include:
 
@@ -218,6 +218,10 @@ https://www.figma.com/design/DaRovEylQ27MruGGTDAK0T/Erimo-Kaori-Sandy-prototype?
 ## Live Site (Staging)
 
 https://bcit-movie-db-git-staging-kes-projects-3f83c4b4.vercel.app/
+
+## Live Site (Product)
+
+https://bcit-movie-db.vercel.app/
 
 ## GitHub Repository
 
