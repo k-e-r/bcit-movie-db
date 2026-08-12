@@ -34,7 +34,7 @@ export const BackdropSkeleton = () => {
   return (
     <div
       aria-hidden="true"
-      className="mb-[47px] md:mb-[65px] lg:mb-[80px] h-[470px] lg:h-[1080px] animate-pulse w-full bg-gray-500"></div>
+      className="w-full max-h-[470px] lg:max-h-[800px] h-[80vh] mb-[47px] md:mb-[65px] lg:mb-[80px] animate-pulse bg-gray-500"></div>
   )
 }
 
