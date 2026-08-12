@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useSearchParams } from "react-router";
 
 import { ChevronUpIcon } from "../icons/ChevronUpIcon";
+import { useToast } from "../../hooks/useToast";
 
 const CATEGORY_LINKS = [
   {
@@ -26,6 +27,7 @@ export const CategorySelector = () => {
   const [searchParams] = useSearchParams();
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [selectCategory, setSelectCategory] = useState(CATEGORY_LINKS[0].label);
+  const { showToast } = useToast();
 
   useEffect(() => {
     const category = searchParams.get("category") ?? CATEGORY_LINKS[0].category;
@@ -54,7 +56,10 @@ export const CategorySelector = () => {
                 <Link
                   className={`${selectCategory === label ? "bg-black text-white" : ""} block uppercase text-sm md:text-md font-bold w-full py-2 pr-5 text-center hover:bg-black hover:text-white sm:border sm:rounded-full sm:px-4 sm:py-2.5 sm:whitespace-nowrap transition-all duration-300 ease-in-out`}
                   to={`/?category=${category}`}
-                  onClick={() => setIsCategoryOpen(false)}
+                  onClick={() => {
+                    setIsCategoryOpen(false);
+                    showToast(`Showing ${label} movies`);
+                  }}
                 >
                   {label}
                 </Link>
