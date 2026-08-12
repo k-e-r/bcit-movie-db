@@ -10,8 +10,8 @@ const fetchMovieApi = async (path) => {
   return response.json();
 };
 
-export const getCategoryMovies = (category = "now_playing") => {
-  return fetchMovieApi(`/api/movies?category=${category}`);
+export const getCategoryMovies = (category = "now_playing", page = 1) => {
+  return fetchMovieApi(`/api/movies?category=${category}&page=${page}`);
 };
 
 export const getMovieDetails = (movieId) => {
