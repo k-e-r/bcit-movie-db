@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { HeroSkeleton } from "./HeroSkelton";
 import { Link, useSearchParams } from "react-router";
+import { FavouriteButton } from "../common/FavouriteButton";
 
 export const HeroSection = ({ heroMovies }) => {
   const [isImageLoading, setIsImageLoading] = useState(true);
@@ -72,7 +73,13 @@ export const HeroSection = ({ heroMovies }) => {
                       <h1 className="text-4xl">{item.title}</h1>
                     </div>
                     <p className="text-sm">{item.overview}</p>
-                    <Link className="border rounded-full py-2 px-4 font-bold w-fit hover:bg-black hover:border-black transition-all duration-300 ease-in-out" to={`/movies/${item.id}`}>More Info</Link>
+                    <div className="flex gap-4">
+                      <Link className="border rounded-full py-2 px-4 font-bold w-fit hover:bg-black hover:border-black transition-all duration-300 ease-in-out" to={`/movies/${item.id}`}>More Info</Link>
+                      <FavouriteButton
+                        movieData={item}
+                        baseColour="white"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

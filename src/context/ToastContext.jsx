@@ -21,11 +21,11 @@ export const ToastProvider = ({ children }) => {
       setToast((prev) =>
         prev ? { ...prev, isClosing: true } : null
       );
-    }, 19700);
+    }, 3700);
 
     timerRef.current = setTimeout(() => {
       setToast(null);
-    }, 20000);
+    }, 4000);
   };
 
   return (

@@ -1,12 +1,15 @@
 import { HeartIcon } from "../icons/HeartIcon";
 import { useFavourites } from "../../hooks/useFavourites";
+import { useToast } from "../../hooks/useToast";
 
 export const FavouriteButton = ({
   movieData,
   className = "",
   baseColour = "black",
+  strokeWidth = 1.5,
 }) => {
   const { isFavouriteMovie, toggleFavouriteMovie } = useFavourites();
+  const { showToast } = useToast();
 
   if (!movieData?.id) {
     return null;
@@ -19,10 +22,20 @@ export const FavouriteButton = ({
       ? "stroke-white"
       : "stroke-[#212121]";
 
+  const handleFavourite = () => {
+    toggleFavouriteMovie(movieData);
+
+    showToast(
+      isFavourite
+        ? "Removed from favourites"
+        : "Added to favourites"
+    );
+  };
+
   return (
     <button
       type="button"
-      onClick={() => toggleFavouriteMovie(movieData)}
+      onClick={handleFavourite}
       aria-label={
         isFavourite
           ? "Remove from favourites"
@@ -35,7 +48,8 @@ export const FavouriteButton = ({
           isFavourite
             ? "fill-[#e20d67] stroke-[#e20d67]"
             : `fill-none ${defaultStroke}`
-        }`}
+          }`}
+        strokeWidth={strokeWidth}
       />
     </button>
   );

@@ -24,7 +24,7 @@ button, a {
 }
 
 .animate-toast-progress {
-  animation: toast-progress 20000ms linear forwards;
+  animation: toast-progress 4000ms linear forwards;
 }
 
 @keyframes toast-in {

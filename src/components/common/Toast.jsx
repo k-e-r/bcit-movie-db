@@ -10,7 +10,7 @@ export const Toast = () => {
       key={toast.id}
       role="status"
       aria-live="polite"
-      className="fixed top-5 right-0 z-[9999] min-w-[280px] overflow-hidden border border-neutral-700 bg-neutral-950 text-neutral-100 shadow-lg"
+      className="fixed bottom-10 right-0 z-[9999] min-w-[280px] overflow-hidden border border-neutral-700 bg-neutral-950 text-neutral-100 shadow-lg"
       style={{
         animation: toast.isClosing
           ? "toast-out 300ms ease-in forwards"
