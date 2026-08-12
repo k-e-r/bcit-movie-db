@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 
 export const ScrollToTop = () => {
   const { pathname, search } = useLocation();
+
   const previousLocation = useRef({
     pathname,
     search,
@@ -10,13 +11,10 @@ export const ScrollToTop = () => {
 
   useEffect(() => {
     const previous = previousLocation.current;
-
     const previousParams = new URLSearchParams(previous.search);
     const currentParams = new URLSearchParams(search);
-
     const previousCategory = previousParams.get("category");
     const currentCategory = currentParams.get("category");
-
     const pathnameChanged = previous.pathname !== pathname;
     const categoryChanged = previousCategory !== currentCategory;
 
