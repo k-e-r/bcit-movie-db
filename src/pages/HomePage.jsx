@@ -26,6 +26,7 @@ export const HomePage = () => {
   const [heroMovies, setHeroMovies] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [shouldScrollToMovies, setShouldScrollToMovies] = useState(false);
   const movieListRef = useRef(null);
 
   const queryCategory = searchParams.get("category");
@@ -147,15 +148,23 @@ export const HomePage = () => {
     newParams.set("category", category);
     newParams.set("page", String(page));
 
+    setShouldScrollToMovies(true);
+
     setSearchParams(newParams, {
       preventScrollReset: true,
     });
-
-    movieListRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
   };
+
+  useEffect(() => {
+    if (!isLoading && shouldScrollToMovies) {
+      movieListRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+      setShouldScrollToMovies(false);
+    }
+  }, [isLoading, shouldScrollToMovies]);
 
   const paginationItems = getPaginationItems(
     currentPage,
