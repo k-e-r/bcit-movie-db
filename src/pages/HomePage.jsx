@@ -176,7 +176,7 @@ export const HomePage = () => {
 
       {!isLoading && totalPages > 1 && (
         <nav
-          className="flex items-center justify-center gap-2 my-12"
+          className="flex items-center justify-center gap-2 mb-20 sm:mb-30"
           aria-label="Movie pagination"
         >
           <button
