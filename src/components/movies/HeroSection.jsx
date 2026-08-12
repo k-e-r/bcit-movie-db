@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
 import { HeroSkeleton } from "./HeroSkelton";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
+import { FavouriteButton } from "../common/FavouriteButton";
 
 export const HeroSection = ({ heroMovies }) => {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [heroData, setHeroData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
+
+  const categoryTitles = {
+    upcoming: "Upcoming",
+    top_rated: "Top Rated",
+    popular: "Popular",
+    now_playing: "Now Playing",
+  };
+  const categoryTitle = categoryTitles[category] || "Now Playing";
 
   useEffect(() => {
     const images = heroMovies.filter((movie) => movie.backdrop_path);
@@ -53,9 +65,21 @@ export const HeroSection = ({ heroMovies }) => {
 
                 <div className="absolute left-1/2 transform -translate-x-1/2 z-1 bottom-0 max-w-[1260px] w-full h-full block flex items-end justify-end">
                   <div className="max-w-[700px] w-full text-white px-7 sm:px-15 pb-17 sm:pb-25 flex flex-col gap-6">
-                    <h1 className="text-4xl">{item.title}</h1>
+                    <div className="flex flex-col gap-2">
+                      <span className="inline-flex w-fit items-center rounded-sm border border-white/30 bg-black/30 px-3 py-1 text-xs font-semibold tracking-wide text-white backdrop-blur-sm">
+                        {categoryTitle}
+                      </span>
+
+                      <h1 className="text-4xl">{item.title}</h1>
+                    </div>
                     <p className="text-sm">{item.overview}</p>
-                    <Link className="border rounded-full py-2 px-4 font-bold w-fit hover:bg-black hover:border-black transition-all duration-300 ease-in-out" to={`/movies/${item.id}`}>More Info</Link>
+                    <div className="flex gap-4">
+                      <Link className="border rounded-full py-2 px-4 font-bold w-fit hover:bg-black hover:border-black transition-all duration-300 ease-in-out" to={`/movies/${item.id}`}>More Info</Link>
+                      <FavouriteButton
+                        movieData={item}
+                        baseColour="white"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

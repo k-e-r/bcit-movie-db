@@ -8,6 +8,15 @@ const CATEGORIES = [
 export default async function getCategoryMovies(request, response) {
   const category = request.query.category ?? "now_playing";
 
+  const requestedPage = Number(request.query.page ?? 1);
+
+  const page =
+    Number.isInteger(requestedPage) &&
+    requestedPage >= 1 &&
+    requestedPage <= 500
+      ? requestedPage
+      : 1;
+
   if (!CATEGORIES.includes(category)) {
     return response.status(400).json({
       message: "Invalid movie category.",
@@ -16,7 +25,7 @@ export default async function getCategoryMovies(request, response) {
 
   try {
     const tmdbResponse = await fetch(
-      `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`,
+      `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`,

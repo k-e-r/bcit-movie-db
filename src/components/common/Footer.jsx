@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import { useToast } from "../../hooks/useToast";
 
 const CATEGORY_LINKS = [
   {
@@ -21,6 +22,7 @@ const CATEGORY_LINKS = [
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { showToast } = useToast();
 
   return (
     <footer className="max-w-[1260px] px-4 sm:px-8 m-auto">
@@ -41,6 +43,7 @@ export const Footer = () => {
               <li key={category}>
                 <Link
                   to={`/?category=${category}`}
+                  onClick={() => showToast(`Showing ${label} movies`)}
                   className="
                     relative inline-block uppercase
                     after:absolute after:left-0 after:-bottom-0
