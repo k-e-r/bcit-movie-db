@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { Button } from '../components/common/Button'
+import { FavouriteButton } from '../components/common/FavouriteButton'
+import { ImgPlaceholder } from '../components/common/ImgPlaceholder'
 import { PageLayout } from '../components/common/PageLayout'
 import {
   BackdropSkeleton,
@@ -12,8 +14,8 @@ import {
   MovieDetailTrailerSkeleton,
   SkeletonLoading,
 } from '../components/movies/MovieDetailSkeleton'
+import { APP_TITLE, useMetaTag } from '../hooks/useMetaTag'
 import { getMovieCredits, getMovieDetails, getMovieVideos } from '../services/movieService'
-import { FavouriteButton } from '../components/common/FavouriteButton'
 
 const TMDB_IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original'
 const YOUTUBE_EMBED_URL = 'https://www.youtube.com/embed'
@@ -25,14 +27,17 @@ export const MovieDetailsPage = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
-  const releasedYear = String(new Date(movieData.details?.release_date).getFullYear()) || ''
-  const formattedRuntime = `${Math.floor(movieData.details?.runtime / 60)}h ${movieData.details?.runtime % 60}m`
-  const formattedRate = movieData.details?.vote_average?.toFixed(1)
-  const posterUrl = `${TMDB_IMAGE_BASE_URL}${movieData.details?.backdrop_path}`
+  const { title, overview, release_date, runtime, vote_average, backdrop_path } = movieData.details || {}
+  const releasedYear = String(new Date(release_date).getFullYear()) || ''
+  const formattedRuntime = `${Math.floor(runtime / 60)}h ${runtime % 60}m`
+  const formattedRate = vote_average?.toFixed(1)
+  const posterUrl = backdrop_path ? `${TMDB_IMAGE_BASE_URL}${backdrop_path}` : null
+
   const casts = movieData.credits?.cast?.map(({ name, profile_path }) => ({
     name,
     src: profile_path ? `${TMDB_IMAGE_BASE_URL}${profile_path}` : null,
   }))
+
   const trailers = movieData.videos.results
     ?.filter(({ type, site }) => type === 'Trailer' && site === 'YouTube')
     .map(({ key }) => `${YOUTUBE_EMBED_URL}/${key}`)
@@ -64,16 +69,21 @@ export const MovieDetailsPage = () => {
     }
   }, [movieId])
 
+  useMetaTag({ title, description: overview || `${title || 'Movie'} details on ${APP_TITLE}` })
+
   if (errorMessage) return <MovieDetailsError errorMessage={errorMessage} />
 
   return (
     <div aria-busy={isLoading}>
       <MovieDetailLoadingStatus isLoading={isLoading} />
+
       <SkeletonLoading skeleton={<BackdropSkeleton />} isLoading={isLoading}>
         <img
           src={posterUrl}
           alt=""
-          className="mx-auto mb-[47px] md:mb-[65px] lg:mb-[80px] h-[470px] lg:h-[1080px] object-cover"
+          className={`w-full h-[80vh] max-h-[470px] lg:max-h-[800px] mb-[47px] md:mb-[65px] lg:mb-[80px] object-cover ${
+            posterUrl ? '' : 'bg-linear-to-b from-gray-200 to-gray-400'
+          }`}
         />
       </SkeletonLoading>
 
@@ -82,7 +92,7 @@ export const MovieDetailsPage = () => {
           <section>
             <SkeletonLoading skeleton={<MovieDetailTitleSkeleton />} isLoading={isLoading}>
               <div className="flex items-center gap-3 md:gap-5 mb-[10px] lg:mb-[40px]">
-                <h1 className="font-bold inline-block text-2xl md:text-4xl lg:text-5xl">{movieData.details?.title}</h1>
+                <h1 className="font-bold inline-block text-2xl md:text-4xl lg:text-5xl">{title}</h1>
                 <FavouriteButton movieData={movieData.details} className="w-8 sm:w-10 stroke-3" />
               </div>
             </SkeletonLoading>
@@ -95,7 +105,7 @@ export const MovieDetailsPage = () => {
           <section>
             <h2 className="movie-detail-subtitle">Introduction</h2>
             <SkeletonLoading skeleton={<MovieDetailContentSkeleton />} isLoading={isLoading}>
-              <p className="text-xs lg:text-2xl">{movieData.details?.overview}</p>
+              <p className="text-xs lg:text-2xl">{overview}</p>
             </SkeletonLoading>
           </section>
           <section>
@@ -105,11 +115,11 @@ export const MovieDetailsPage = () => {
                 className={`flex w-full overflow-x-auto gap-2 lg:gap-3 pb-2 ${trailers?.length === 0 && 'mb-[175px]'}`}>
                 {casts?.map(({ name, src }, i) => (
                   <div key={i} className="w-[100px] lg:w-[200px] shrink-0">
-                    <img
-                      src={src}
-                      alt=""
-                      className={`w-full h-[160px] lg:h-[300px] object-cover mb-2 lg:mb-3 ${src ? '' : 'bg-gray-200'}`}
-                    />
+                    {src ? (
+                      <img src={src} alt="" className="w-full h-[160px] lg:h-[300px] mb-2 lg:mb-3 object-cover" />
+                    ) : (
+                      <ImgPlaceholder className="w-full h-[160px] lg:h-[300px] mb-2 lg:mb-3" />
+                    )}
                     <p className="text-center text-xs lg:text-2xl">{name}</p>
                   </div>
                 ))}
