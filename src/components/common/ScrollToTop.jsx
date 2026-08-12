@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 
+const DEFAULT_CATEGORY = "popular";
+
 export const ScrollToTop = () => {
   const { pathname, search } = useLocation();
 
@@ -13,8 +15,8 @@ export const ScrollToTop = () => {
     const previous = previousLocation.current;
     const previousParams = new URLSearchParams(previous.search);
     const currentParams = new URLSearchParams(search);
-    const previousCategory = previousParams.get("category");
-    const currentCategory = currentParams.get("category");
+    const previousCategory = previousParams.get("category") ?? DEFAULT_CATEGORY;
+    const currentCategory = currentParams.get("category") ?? DEFAULT_CATEGORY;
     const pathnameChanged = previous.pathname !== pathname;
     const categoryChanged = previousCategory !== currentCategory;
 
