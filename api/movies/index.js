@@ -5,7 +5,7 @@ const CATEGORIES = [
   "upcoming",
 ];
 
-export default async function getCategoryMovies(request, response) {
+export default async function fetchMovieApi(request, response) {
   const category = request.query.category ?? "now_playing";
 
   const requestedPage = Number(request.query.page ?? 1);

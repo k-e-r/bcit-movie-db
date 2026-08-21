@@ -1,17 +1,50 @@
-const fetchMovieApi = async (path) => {
-  const response = await fetch(`${path}`);
+const CATEGORIES = [
+  "popular",
+  "top_rated",
+  "now_playing",
+  "upcoming",
+];
 
-  if (!response.ok) {
-    throw new Error(
-      `Failed to fetch movies: ${response.status}`,
-    );
+export const getCategoryMovies = async (category = "now_playing", page = 1) => {
+  const requestedPage =
+    Number.isInteger(page) &&
+    page >= 1 &&
+    page <= 500
+      ? page
+      : 1;
+
+  if (!CATEGORIES.includes(category)) {
+    return;
   }
 
-  return response.json();
-};
+  try {
+    const tmdbResponse = await fetch(
+      `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_TMDB_ACCESS_TOKEN}`,
+          Accept: "application/json",
+        },
+      },
+    );
 
-export const getCategoryMovies = (category = "now_playing", page = 1) => {
-  return fetchMovieApi(`/api/movies?category=${category}&page=${page}`);
+    const data = await tmdbResponse.json();
+
+    if (!tmdbResponse.ok) {
+      console.error("TMDb error:", {
+        status: tmdbResponse.status,
+        data,
+      });
+
+      return;
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Function error:", error);
+
+    return;
+  }
 };
 
 export const getMovieDetails = (movieId) => {
